@@ -13,7 +13,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-2xl font-bold text-green-700 font-display mb-4">
-              🌾 AgroMarket
+              AgroMarket
             </h3>
             <p className="text-sm text-muted-foreground mb-4 max-w-xs mx-auto md:mx-0">
               Plateforme locale de vente de produits fermiers. Soutenez les agriculteurs locaux.

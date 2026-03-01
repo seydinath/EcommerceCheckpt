@@ -50,9 +50,9 @@ export const Navbar = () => {
             <Link
               to="/"
               onClick={() => setActive(null)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 font-bold text-lg text-green-700"
             >
-              <span className="text-2xl">🌾</span>
+              AgroMarket
             </Link>
             <Link
               to="/"

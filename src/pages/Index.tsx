@@ -68,7 +68,7 @@ const Index = () => {
         <div className="container mx-auto px-4 relative z-10 pt-20">
           <div className="max-w-3xl text-white drop-shadow-sm animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-green-50 font-medium text-sm mb-6">
-              {t("brand", "🌾 AgroMarket - Plateforme des Fermiers")}
+              {t("brand", "AgroMarket - Plateforme des Fermiers")}
             </span>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight font-display text-white">
               Cultivons l'Avenir Ensemble
@@ -167,7 +167,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-2 duration-500">
             <span className="text-green-600 font-medium tracking-wider uppercase text-sm mb-2 block">
-              🌽 Découvrez Notre Sélection
+              Decouvrez Notre Selection
             </span>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 font-display text-green-950">
               Nos Produits Fermiers
@@ -249,7 +249,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1625246333195-78d9c38ad576?auto=format&fit=crop&q=80')] opacity-10 bg-cover bg-center mix-blend-overlay" />
         <div className="container mx-auto px-4 text-center relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 font-display animate-in fade-in slide-in-from-bottom-2 duration-500">
-            Rejoignez la Révolution Agricole 🌱
+            Rejoignez la Revolution Agricole
           </h2>
           <p className="text-xl mb-10 text-green-100 max-w-2xl mx-auto font-light animate-in fade-in slide-in-from-bottom-2 duration-500 delay-100">
             Que vous soyez fermier, vendeur ou acheteur responsable - ensemble, localisons l'agriculture et soutenons les économies communautaires.
