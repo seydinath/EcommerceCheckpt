@@ -1,0 +1,324 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
+import { ArrowLeft, Leaf } from "lucide-react";
+import RoleSelector from "@/components/RoleSelector";
+
+const Auth = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { login, register, isAuthenticated, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [signupName, setSignupName] = useState("");
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+  const [businessName, setBusinessName] = useState("");
+  const [location, setLocation] = useState("");
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      navigate("/");
+    }
+  }, [authLoading, isAuthenticated, navigate]);
+
+  if (authLoading) {
+    return null; // Or a loading spinner
+  }
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await login(loginEmail, loginPassword);
+
+      toast({
+        title: t("auth.successTitle"),
+        description: t("auth.successLogin"),
+      });
+      navigate("/");
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : "Failed to log in";
+      toast({
+        variant: "destructive",
+        title: t("auth.errorTitle"),
+        description: msg,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!selectedRole) {
+      toast({
+        variant: "destructive",
+        title: t("auth.errorTitle"),
+        description: "Please select a role",
+      });
+      return;
+    }
+
+    if ((selectedRole === "seller" || selectedRole === "farmer") && !businessName) {
+      toast({
+        variant: "destructive",
+        title: t("auth.errorTitle"),
+        description: "Business name is required for sellers and farmers",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await register(
+        signupEmail,
+        signupPassword,
+        signupName,
+        selectedRole,
+        businessName,
+        location,
+        phone
+      );
+
+      toast({
+        title: t("auth.successTitle"),
+        description: t("auth.successSignup"),
+      });
+      navigate("/");
+    } catch (error: unknown) {
+      const msg =
+        error instanceof Error ? error.message : "Failed to create account";
+      toast({
+        variant: "destructive",
+        title: t("auth.errorTitle"),
+        description: msg,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left Side - Hero/Image */}
+      <div className="hidden md:flex md:w-1/2 bg-primary/5 relative overflow-hidden items-center justify-center p-12">
+        <div className="absolute inset-0 bg-[url('/cover.webp')] bg-cover bg-center opacity-20" />
+        <div className="relative z-10 max-w-lg text-center">
+          <div className="mb-8 flex justify-center">
+            <div className="h-24 w-24 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-xl">
+              <Leaf className="h-12 w-12 text-primary" />
+            </div>
+          </div>
+          <h1 className="text-4xl font-display font-bold text-primary mb-6">
+            AgroMarket
+          </h1>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            {t("about.story.desc")}
+          </p>
+        </div>
+        {/* Decorative circles */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+      </div>
+
+      {/* Right Side - Auth Forms */}
+      <div className="flex-1 flex items-center justify-center p-4 md:p-8 bg-background">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center md:text-left">
+            <Link
+              to="/"
+              className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-8"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {t("auth.backHome")}
+            </Link>
+            <h2 className="text-3xl font-bold tracking-tight">
+              {t("auth.welcome")}
+            </h2>
+          </div>
+
+          <Tabs defaultValue="login" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
+              <TabsTrigger value="login">{t("auth.loginTab")}</TabsTrigger>
+              <TabsTrigger value="signup">{t("auth.signupTab")}</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="login" className="space-y-4">
+              <div className="space-y-2 text-center md:text-left">
+                <h3 className="text-lg font-medium">{t("auth.loginTitle")}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {t("auth.loginDesc")}
+                </p>
+              </div>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="login-email">{t("auth.emailLabel")}</Label>
+                  <Input
+                    id="login-email"
+                    type="email"
+                    placeholder={t("auth.emailPlaceholder")}
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
+                    className="h-11"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="login-password">
+                    {t("auth.passwordLabel")}
+                  </Label>
+                  <Input
+                    id="login-password"
+                    type="password"
+                    placeholder={t("auth.passwordPlaceholder")}
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                    className="h-11"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full h-11 text-base"
+                  disabled={loading}
+                >
+                  {loading ? t("auth.loginLoading") : t("auth.loginButton")}
+                </Button>
+              </form>
+            </TabsContent>
+
+            <TabsContent value="signup" className="space-y-4">
+              <div className="space-y-2 text-center md:text-left">
+                <h3 className="text-lg font-medium">{t("auth.signupTitle")}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {t("auth.signupDesc")}
+                </p>
+              </div>
+              
+              {/* Role Selector */}
+              <div className="space-y-2">
+                <Label>Role <span className="text-red-500">*</span></Label>
+                <RoleSelector selectedRole={selectedRole} onSelectRole={setSelectedRole} />
+              </div>
+
+              <form onSubmit={handleSignup} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="signup-name">{t("auth.nameLabel")}</Label>
+                  <Input
+                    id="signup-name"
+                    type="text"
+                    placeholder={t("auth.namePlaceholder")}
+                    value={signupName}
+                    onChange={(e) => setSignupName(e.target.value)}
+                    required
+                    className="h-11"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-email">{t("auth.emailLabel")}</Label>
+                  <Input
+                    id="signup-email"
+                    type="email"
+                    placeholder={t("auth.emailPlaceholder")}
+                    value={signupEmail}
+                    onChange={(e) => setSignupEmail(e.target.value)}
+                    required
+                    className="h-11"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="signup-password">
+                    {t("auth.passwordLabel")}
+                  </Label>
+                  <Input
+                    id="signup-password"
+                    type="password"
+                    placeholder={t("auth.passwordPlaceholder")}
+                    value={signupPassword}
+                    onChange={(e) => setSignupPassword(e.target.value)}
+                    required
+                    className="h-11"
+                  />
+                </div>
+
+                {/* Seller/Farmer specific fields */}
+                {(selectedRole === "seller" || selectedRole === "farmer") && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="business-name">
+                        {selectedRole === "farmer" ? "Farm Name" : "Business Name"}
+                        <span className="text-red-500">*</span>
+                      </Label>
+                      <Input
+                        id="business-name"
+                        type="text"
+                        placeholder={selectedRole === "farmer" ? "Enter farm name" : "Enter business name"}
+                        value={businessName}
+                        onChange={(e) => setBusinessName(e.target.value)}
+                        required
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="location">Location</Label>
+                      <Input
+                        id="location"
+                        type="text"
+                        placeholder="City or region"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="h-11"
+                      />
+                    </div>
+                  </>
+                )}
+
+                <Button
+                  type="submit"
+                  className="w-full h-11 text-base"
+                  disabled={loading}
+                >
+                  {loading ? t("auth.signupLoading") : t("auth.signupButton")}
+                </Button>
+              </form>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Auth;

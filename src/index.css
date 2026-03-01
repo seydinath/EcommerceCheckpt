@@ -1,0 +1,107 @@
+@import '@mantine/core/styles.layer.css';
+@import 'mantine-react-table/styles.css';
+
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+/* If you use typography, uncomment the next line */
+/* @plugin "@tailwindcss/typography"; */
+
+/* Custom Font: BucklaneScript */
+/* @font-face {
+  font-family: 'BucklaneScript';
+  src: url('/fonts/BucklaneScript.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+} */
+
+/* Utility class and heading helper */
+.font-display { font-family: var(--font-display); }
+html, body { font-family: var(--font-body); }
+h1, h2, h3, .heading-display { font-family: var(--font-display); }
+
+/* Tailwind v4 tokens – Agricultural Green & Earth palette */
+@theme {
+  /* Agricultural Green palette */
+  --color-agro-green-50: #f0f8f0;
+  --color-agro-green-100: #d3e8d3;
+  --color-agro-green-200: #a8d5a8;
+  --color-agro-green-300: #7cbd7c;
+  --color-agro-green-400: #5ba85b;
+  --color-agro-green-500: #3d8a3d;
+  --color-agro-green-600: #2d6b2d;
+  --color-agro-green-700: #1f4c1f;
+  --color-agro-green-800: #122e12;
+  --color-agro-green-900: #0a1a0a;
+  --color-agro-green-950: #050d05;
+
+  /* Agricultural Earth palette */
+  --color-agro-earth-50: #fefbf3;
+  --color-agro-earth-100: #f5ede1;
+  --color-agro-earth-200: #e8d4b8;
+  --color-agro-earth-300: #daba8e;
+  --color-agro-earth-400: #cc9f64;
+  --color-agro-earth-500: #b8843a;
+  --color-agro-earth-600: #906b2e;
+  --color-agro-earth-700: #6b5025;
+  --color-agro-earth-800: #463518;
+  --color-agro-earth-900: #2a2010;
+  --color-agro-earth-950: #1a1408;
+
+  /* Neutral grays */
+  --color-neutral-50: #f9f9f9;
+  --color-neutral-100: #f3f3f3;
+  --color-neutral-200: #e7e7e7;
+  --color-neutral-300: #d1d1d1;
+  --color-neutral-400: #b0b0b0;
+  --color-neutral-500: #888888;
+  --color-neutral-600: #686868;
+  --color-neutral-700: #484848;
+  --color-neutral-800: #282828;
+  --color-neutral-900: #0f0f0f;
+  --color-neutral-950: #050505;
+  --color-ink-900: #101010;
+  --color-ink-950: #000000;
+
+  /* Light theme semantic tokens */
+  --font-display: 'BucklaneScript', 'Segoe Script', 'Brush Script MT', cursive;
+  --font-body: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --color-background: var(--color-vanilla-custard-50);
+  --color-foreground: var(--color-ink-900);
+
+  --color-card: var(--color-almond-silk-50);
+  --color-card-foreground: var(--color-ink-900);
+
+  --color-primary: var(--color-blush-pop-600);
+  --color-primary-foreground: var(--color-vanilla-custard-50);
+
+  --color-accent: var(--color-plum-500);
+  --color-accent-foreground: var(--color-vanilla-custard-50);
+
+  --color-muted: var(--color-vintage-berry-200);
+  --color-muted-foreground: var(--color-vintage-berry-800);
+
+  --color-border: var(--color-almond-silk-200);
+  --color-input: var(--color-almond-silk-200);
+  --color-ring: var(--color-blush-pop-500);
+
+    /* Secondary & Destructive */
+    --color-secondary: var(--color-almond-silk-100);
+    --color-secondary-foreground: var(--color-ink-900);
+    --color-destructive: var(--color-blush-pop-700);
+    --color-destructive-foreground: var(--color-vanilla-custard-50);
+
+    /* Background image opacity token (fixed scheme) */
+    --bg-image-opacity: 0.15;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+/* Base resets still fine with v4, now tokens exist so utilities are valid */
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}

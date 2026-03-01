@@ -1,0 +1,94 @@
+# ============================================
+# Dependencies & Node Modules
+# ============================================
+node_modules/
+.pnp
+.pnp.js
+package-lock.json
+yarn.lock
+
+# ============================================
+# Environment Variables
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# ============================================
+# Build Outputs & Artifacts
+# ============================================
+dist/
+dist-ssr/
+build/
+.turbo/
+.next/
+out/
+
+# ============================================
+# IDE & Editor
+# ============================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.sln
+*.njsproj
+*.ntvs*
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# ============================================
+# Operating System
+# ============================================
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# ============================================
+# Logs & Debugging
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+debug.log
+
+# ============================================
+# Generated Files
+# ============================================
+*.local
+*.pid
+*.pid.lock
+
+# ============================================
+# Temporary Files
+# ============================================
+tmp/
+temp/
+*.tmp
+
+# ============================================
+# Deprecated Backups (from cleanup)
+# ============================================
+server/deprecated/
+
+# ============================================
+# File Uploads (Keep .gitkeep)
+# ============================================
+server/uploads/*
+!server/uploads/.gitkeep
+
+# ============================================
+# Optional - System Files
+# ============================================
+.cache/
+.eslintcache
+*.tsbuildinfo
